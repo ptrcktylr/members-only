@@ -1,9 +1,46 @@
-<p id="notice"><%= notice %></p>
+<div class="column is-half">
+  <div class="box">
+    <article class="media">
+      <div class="media-left">
+        <figure class="image is-64x64">
+          <% if user_signed_in? %>
+            <%= gravatar_image_tag(@post.user.email, size: 64, alt: @post.user.name)%>
+          <% else %>
+            <%= image_tag("anon.jpg", alt: "anon-profile-pic") %>
+          <% end %>
+        </figure>
+      </div>
 
-<p>
-  <strong>Post:</strong>
-  <%= @post.post %>
-</p>
+      <div class="media-content is-centered">
+        <div class="container">
+          <% if user_signed_in? %>
+            <strong><%= @post.user.name %></strong><br />
+            <small>@<%= @post.user.username %></small><br />
+          <% else %>
+            <strong>Anonymous</strong><br />
+            <small>@anonymous</small><br />
+          <% end %>
+          <p><%= @post.post %></p>
+        </div>
+        <% if user_signed_in? && @post.user_id == current_user.id %>
+          <nav class="level">
+            <div class="level-left is-mobile">
+              <%= link_to @post, class: "level-item" do %>
+                <span class="icon"><i class="fa fa-link" aria-hidden="true"></i></span>
+              <% end %>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+              <%= link_to edit_post_path(@post), class: "level-item" do %>
+                <span class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+              <% end %>
+
+              <%= link_to @post, method: :delete, data: { confirm: "Are you sure you want to delete this post?" 
+              } do %>
+                <span class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+              <% end %>
+            </div>
+          </nav>
+        <% end %>
+      </div>
+    </article>
+  </div>
+</div>

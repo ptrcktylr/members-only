@@ -30,3 +30,11 @@
  .notification:not(:last-child) {
    margin-bottom: 0;
  }
+
+abbr[title] {
+    text-decoration: none;
+}
+
+.error {
+  display: flex;
+}
